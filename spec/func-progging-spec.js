@@ -490,6 +490,7 @@ describe ('a functional programming lesson', () => {
     // linked lists are recursive and do not require external information like an index to be traversed
     // i'd prefer to implement the functions immutably, but it's inconvenient with arrays instead
     // also, note that all of the functions create a new copy of the collection instead of mutating it
+    // i prefer the ocaml names for the following functions, though several of them have many different aliases
 
     it ('covers fold', () => {
       // fold is the most basic collection function
@@ -511,6 +512,7 @@ describe ('a functional programming lesson', () => {
       expect (fold (add) (0) (arr)).toEqual (10)
 
       // javascript arrays include this tupled as the .reduce method
+      // also aliased as inject
     })
 
     xit ('includes an exercise to use fold', () => {
@@ -616,6 +618,7 @@ describe ('a functional programming lesson', () => {
       expect (exists (is_even) (arr)).toEqual (true)
 
       // javascript arrays include this tupled as the .some method
+      // also aliased as any
     })
 
     xit ('includes an exercise to use exists', () => {
@@ -650,6 +653,21 @@ describe ('a functional programming lesson', () => {
       const arr = [1, 2, 3, 4, 5]
       // find the first element greater than 3
       expect (find (_) (arr)).toEqual (4)
+    })
+
+    it ('covers iter', () => {
+      // ('a -> unit) -> 'a array -> unit
+      const iter = f => arr => arr.forEach (f)
+
+      // num array
+      const arr = [1, 3, 5, 7]
+
+      // num
+      var count = 0
+
+      // unit
+      iter (x => count++) (arr)
+      expect (count).toEqual (4)
     })
 
     it ('reminds you that you can have collections of functions', () => {
