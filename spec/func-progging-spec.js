@@ -410,6 +410,20 @@ describe ('a functional programming lesson', () => {
     expect (times3 (4)).toEqual (12)
   })
 
+  it ('reminds you that partially applied functions can be used like any other function', () => {
+    // num -> num -> num
+    const add = x => y => x + y
+
+    // num -> num
+    const add3 = add (3)
+
+    // 'a -> 'a
+    const identity = x => x
+
+    expect (identity (add3) (4)).toEqual (7)
+    expect (identity (add (3)) (4)).toEqual (7)
+  })
+
   it ('covers function composition', () => {
     // function composition is creating a new function by combining two functions together
     //   by taking the output of one and immediately using it as the input of another
@@ -558,7 +572,7 @@ describe ('a functional programming lesson', () => {
 
     xit ('includes an exercise to use filter', () => {
       // ('a -> 'b) -> 'a array -> 'b array
-      const map = f => arr => arr.filter (f)
+      const filter = f => arr => arr.filter (f)
 
       // num array
       const arr = [1, 2, 3, 4, 5]
@@ -636,6 +650,26 @@ describe ('a functional programming lesson', () => {
       const arr = [1, 2, 3, 4, 5]
       // find the first element greater than 3
       expect (find (_) (arr)).toEqual (4)
+    })
+
+    it ('reminds you that you can have collections of functions', () => {
+      // ('a -> bool) -> 'a array -> bool
+      const for_all = f => arr => arr.every (f)
+
+      // ('a -> 'b) -> 'a array -> 'b array
+      const filter = f => arr => arr.filter (f)
+
+      // (num -> bool) array
+      const filters = [
+        x => x > 10,
+        x => x % 2 == 0,
+        x => x / 12 != 1,
+      ]
+
+      // num array
+      const values = [3, 7, 10, 11, 12, 14, 15, 17, 18]
+
+      expect (filter (x => for_all (f => f (x)) (filters)) (values)).toEqual ([14, 18])
     })
   })
 
