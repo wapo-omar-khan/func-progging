@@ -201,11 +201,11 @@ describe ('a functional programming lesson', () => {
     const arr = [0, 1, 2, 3, 4]
 
     // (num * num array) -> num
-    const sum_array = i => arr =>
+    const sum_array = (i, arr) =>
       i < arr.length
-      ? arr[i] + sum_array (i + 1) (arr)
+      ? arr[i] + sum_array (i + 1, arr)
       : 0
-    expect (sum_array (0) (arr)).toEqual (10)
+    expect (sum_array (0, arr)).toEqual (10)
 
     // recursion has the benefit of isolating each case from each other as separate invocations
     // in combination with purity, this means that you only need to consider the arguments for the current invocation when debugging
@@ -298,7 +298,11 @@ describe ('a functional programming lesson', () => {
 
   xit ('includes an exercise to use higher-order functions', () => {
     // takes a function and passes 3 to it and returns the addition function if the result is odd and the subtraction function otherwise
-    const f = _
+    // (num -> num) -> num -> num -> num
+    const f = g =>
+      g (3) % 2 == 1
+      ? (x => y => x + y)
+      : (x => y => x - y)
     expect (f (x => x - 2) (1) (2)).toEqual (3)
     expect (f (x => x - 3) (1) (2)).toEqual (-1)
   })
